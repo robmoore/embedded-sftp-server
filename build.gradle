@@ -1,0 +1,55 @@
+buildscript {
+    ext.kotlin_version = '1.0.6'
+
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:$kotlin_version")
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '1.5.1.RELEASE'
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'kotlin-noarg'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile('org.apache.sshd:sshd-core:1.2.0')
+    compile("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
+    compile('io.github.microutils:kotlin-logging:1.4.2')
+    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+    compile('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
+
+    runtime('org.bouncycastle:bcpg-jdk15on:1.55')
+    runtime('org.bouncycastle:bcpkix-jdk15on:1.55')
+    // For ed25519 support
+    runtime('net.i2p.crypto:eddsa:0.1.0')
+    runtime('com.jcraft:jzlib:1.1.3')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.cloud:spring-cloud-stream-test-support')
+    testCompile('junit:junit:4.12')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-stream-dependencies:Brooklyn.SR1'
+    }
+}
+
+group 'org.sdf.rkm'
+version '1.0-SNAPSHOT'

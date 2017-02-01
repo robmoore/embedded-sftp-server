@@ -1,0 +1,10 @@
+debug: true
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: uploads
+          group: sftp
+        output:
+          destination: uploads
