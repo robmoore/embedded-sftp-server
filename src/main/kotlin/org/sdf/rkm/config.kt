@@ -41,7 +41,7 @@ class SftpServer(val port: Int = 2222, val sshd: SshServer = SshServer.setUpDefa
         sftpSubsystemFactory.addSftpEventListener(sftpEventListener)
         sshd.subsystemFactories = listOf<NamedFactory<Command>>(sftpSubsystemFactory)
 
-        sshd.fileSystemFactory = DefaultFileSystemFactory(defaultHomeDir = Paths.get("build/sftp/home"))
+        sshd.fileSystemFactory = DefaultFileSystemFactory(defaultHomeDir = Paths.get(".sftp/home"))
 
         sshd.start()
 
@@ -50,7 +50,7 @@ class SftpServer(val port: Int = 2222, val sshd: SshServer = SshServer.setUpDefa
 
     @Throws(IOException::class)
     private fun createHostKeyProvider(): KeyPairProvider {
-        val hostKeyFile = File("build/keys/key.pem").toPath()
+        val hostKeyFile = File(".sftp/key.pem").toPath()
         val hostKeyProvider = SecurityUtils.createGeneratorHostKeyProvider(hostKeyFile)
         hostKeyProvider.algorithm = KeyUtils.RSA_ALGORITHM
 
